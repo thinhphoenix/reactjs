@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwaheim=self.webpackChunkwaheim||[]).push([["971"],{830(e,n,c){c.r(n),c.d(n,{component:()=>h});var u=c(974);function h(){return(0,u.jsx)("div",{children:"fuck"})}}}]);
