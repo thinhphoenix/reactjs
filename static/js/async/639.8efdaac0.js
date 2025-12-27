@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkreact=self.webpackChunkreact||[]).push([["639"],{6050(e,c,t){t.r(c),t.d(c,{default:()=>n});let n={currency:"VND",submitBtn:"X\xe1c nhận",cancelBtn:"Hủy"}}}]);
