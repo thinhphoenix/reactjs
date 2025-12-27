@@ -1,11 +1,13 @@
 {
   "files.readonlyInclude": {
-    "**/routeTree.gen.ts": true
+    "**/route-tree.gen.ts": true
   },
   "files.watcherExclude": {
-    "**/routeTree.gen.ts": true
+    "**/route-tree.gen.ts": true
   },
   "search.exclude": {
-    "**/routeTree.gen.ts": true
-  }
+    "**/route-tree.gen.ts": true
+  },
+  "css.lint.unknownAtRules": "ignore",
+  "scss.lint.unknownAtRules": "ignore"
 }

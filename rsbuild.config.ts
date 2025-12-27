@@ -1,7 +1,7 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import { tanstackRouter } from '@tanstack/router-plugin/rspack';
-import { envVar } from './src/helpers/constants';
+import { envConfig } from './src/helpers/constants/env-config';
 
 // Docs: https://rsbuild.rs/config/
 export default defineConfig({
@@ -12,6 +12,7 @@ export default defineConfig({
         tanstackRouter({
           target: 'react',
           autoCodeSplitting: true,
+          generatedRouteTree: 'src/route-tree.gen.ts',
         }),
       ],
     },
@@ -21,8 +22,8 @@ export default defineConfig({
     title: 'Waheim',
   },
   server: {
-    port: 3000,
-    base: envVar.isProd ? envVar.base : '',
+    port: envConfig.port,
+    base: envConfig.base,
     historyApiFallback: true,
   },
 });
