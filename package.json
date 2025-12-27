@@ -1,5 +1,5 @@
 {
-  "name": "waheim",
+  "name": "react",
   "version": "1.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "dev": "rsbuild dev --open",
     "pretty": "prettier --write .",
     "preview": "rsbuild preview",
-    "env:up": "gh secret set -f .env",
+    "env:up": "gh secret set -f",
     "assets:gen": "bun scripts/assets-gen.ts",
     "i18n:gen": "bun scripts/i18n-gen.ts",
     "format": "bun scripts/format-src.ts"

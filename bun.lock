@@ -2,7 +2,7 @@
   "lockfileVersion": 1,
   "workspaces": {
     "": {
-      "name": "waheim",
+      "name": "react",
       "dependencies": {
         "@tanstack/react-query": "^5.90.12",
         "@tanstack/react-router": "^1.141.6",
