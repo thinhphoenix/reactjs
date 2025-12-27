@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwaheim=self.webpackChunkwaheim||[]).push([["829"],{519(e,s,l){l.r(s),l.d(s,{component:()=>h});var n=l(974),a=l(137);function h(){let e=a.q.useParams();return(0,n.jsxs)("div",{children:['Hello "/hello/',e.id,'"!']})}}}]);

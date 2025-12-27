@@ -15,20 +15,18 @@
         // When the single page app is loaded further down in this file,
         // the correct url will be waiting in the browser's history for
         // the single page app to route accordingly.
-        (function (l) {
+        (((l) => {
             if (l.search[1] === '/') {
-                var decoded = l.search.slice(1).split('&').map(function (s) {
-                    return s.replace(/~and~/g, '&')
-                }).join('?');
+                var decoded = l.search.slice(1).split('&').map((s) => s.replace(/~and~/g, '&')).join('?');
                 window.history.replaceState(null, null,
                     l.pathname.slice(0, -1) + decoded + l.hash
                 );
             }
-        }(window.location))
+        })(window.location))
     </script>
     <!-- End Single Page Apps for GitHub Pages -->
 
-<link rel="icon" href="/waheim/favicon.png"><title>Waheim</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/waheim/static/js/lib-react.fa204d1f.js"></script><script defer src="/waheim/static/js/421.0154d68a.js"></script><script defer src="/waheim/static/js/index.ab7bb80b.js"></script><link href="/waheim/static/css/index.2e047e28.css" rel="stylesheet"></head>
+<link rel="icon" href="/waheim/favicon.png"><title>Waheim</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/waheim/static/js/lib-react.b90fa665.js"></script><script defer src="/waheim/static/js/lib-axios.68805b20.js"></script><script defer src="/waheim/static/js/137.ba730042.js"></script><script defer src="/waheim/static/js/index.4c2b80ed.js"></script><link href="/waheim/static/css/index.cead3062.css" rel="stylesheet"></head>
 
 <body>
     <div id="root"></div>

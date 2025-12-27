@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwaheim=self.webpackChunkwaheim||[]).push([["992"],{67(e,n,h){h.r(n),h.d(n,{component:()=>c});var l=h(974);function c(){return(0,l.jsx)("div",{children:'Hello "/hello/"!'})}}}]);

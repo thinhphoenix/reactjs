@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwaheim=self.webpackChunkwaheim||[]).push([["639"],{6050(e,c,n){n.r(c),n.d(c,{default:()=>t});let t={currency:"VND",submitBtn:"X\xe1c nhận",cancelBtn:"Hủy"}}}]);

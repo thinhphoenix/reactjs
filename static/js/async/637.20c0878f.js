@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwaheim=self.webpackChunkwaheim||[]).push([["637"],{2516(e,c,t){t.r(c),t.d(c,{default:()=>u});let u={currency:"USD",submitBtn:"Submit",cancelBtn:"Cancel"}}}]);
