@@ -1,7 +1,7 @@
 import api from '@/helpers/axios-instance';
 import { endpoints } from '@/services/endpoints';
 import { useToast } from '@/services/hooks/common/use-toast';
-import type { TodoDto } from '@/types/dtos/todo.dto';
+import type { TodoDto } from '@/types/dto/todo.dto';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 

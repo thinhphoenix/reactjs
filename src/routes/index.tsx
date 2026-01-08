@@ -1,5 +1,5 @@
 import { useListTodos } from '@/services/hooks/todo/use-list-todos';
-import type { TodoDto } from '@/types/dtos/todo.dto';
+import type { TodoDto } from '@/types/dto/todo.dto';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Row } from 'antd';
 import { useState } from 'react';

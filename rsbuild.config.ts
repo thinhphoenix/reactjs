@@ -13,13 +13,14 @@ export default defineConfig({
           target: 'react',
           autoCodeSplitting: true,
           generatedRouteTree: 'src/route-tree.gen.ts',
+          routeFileIgnorePrefix: '___',
         }),
       ],
     },
   },
   html: {
     template: 'public/index.html',
-    title: 'Waheim',
+    title: 'thinhphoenix/react',
   },
   server: {
     port: envConfig.port,
