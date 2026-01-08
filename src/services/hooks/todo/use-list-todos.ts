@@ -1,4 +1,5 @@
 import api from '@/helpers/axios-instance';
+import i18n from '@/helpers/i18n';
 import { endpoints } from '@/services/endpoints';
 import { useToast } from '@/services/hooks/common/use-toast';
 import type { TodoDto } from '@/types/dto/todo.dto';
@@ -16,7 +17,7 @@ export const useListTodos = (enabled: boolean) => {
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success('Todos loaded successfully');
+      toast.success(i18n.t('common:loadTodosSuccess'));
     }
   }, [isSuccess, toast]);
 

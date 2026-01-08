@@ -5,5 +5,5 @@
 }
 
 .todo {
-  @apply bg-teal-100 p-2 rounded-md border border-teal-300 mt-4;
+  @apply bg-blue-100 p-2 rounded-md border border-blue-300 mt-4 text-blue-800;
 }

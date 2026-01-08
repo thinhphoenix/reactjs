@@ -1,7 +1,8 @@
+import i18n from '@/helpers/i18n';
 import { useListTodos } from '@/services/hooks/todo/use-list-todos';
 import type { TodoDto } from '@/types/dto/todo.dto';
 import { createFileRoute } from '@tanstack/react-router';
-import { Button, Row } from 'antd';
+import { Button, Col, Row } from 'antd';
 import { useState } from 'react';
 
 export const Route = createFileRoute('/')({
@@ -17,10 +18,17 @@ function RouteComponent() {
   };
 
   return (
-    <Row className="p-4">
-      <Button onClick={handleClick} variant="solid" color="primary">
-        {isLoading ? 'Loading...' : 'Load Todos'}
-      </Button>
+    <Col className="p-4">
+      <Row>
+        <Button
+          onClick={handleClick}
+          variant="solid"
+          color="primary"
+          loading={isLoading}
+        >
+          {i18n.t('common:loadTodos')}
+        </Button>
+      </Row>
       {data && (
         <Row className="todo">
           {error && <p>{error.message}</p>}
@@ -29,6 +37,6 @@ function RouteComponent() {
           })}
         </Row>
       )}
-    </Row>
+    </Col>
   );
 }

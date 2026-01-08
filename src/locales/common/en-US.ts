@@ -1,5 +1,5 @@
 export default {
   currency: 'USD',
-  submitBtn: 'Submit',
-  cancelBtn: 'Cancel',
+  loadTodos: 'Load Todos',
+  loadTodosSuccess: 'Todos loaded successfully!',
 };
