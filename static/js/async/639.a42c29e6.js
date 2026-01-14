@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkreact=self.webpackChunkreact||[]).push([["639"],{6050(c,e,s){s.r(e),s.d(e,{default:()=>a});let a={currency:"VND",loadTodos:"Tải danh s\xe1ch c\xf4ng việc",loadTodosSuccess:"Tải danh s\xe1ch c\xf4ng việc th\xe0nh c\xf4ng!"}}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkreact=self.webpackChunkreact||[]).push([["637"],{2516(s,e,o){o.r(e),o.d(e,{default:()=>c});let c={currency:"USD",loadTodos:"Load Todos",loadTodosSuccess:"Todos loaded successfully!"}}}]);
