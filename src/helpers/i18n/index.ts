@@ -12,7 +12,7 @@ for (const lang in resources) {
   resolved[l] = {};
   for (const ns in resources[l]) {
     const n = ns as Ns;
-    resolved[l][n] = (await resources[l][n]()).default;
+    resolved[l][n] = resources[l][n];
   }
 }
 

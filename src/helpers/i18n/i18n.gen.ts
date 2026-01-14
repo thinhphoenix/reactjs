@@ -1,15 +1,21 @@
 /* AUTO-GENERATED — DO NOT EDIT */
+import viVN_common from '../../locales/common/vi-VN';
+import enUS_common from '../../locales/common/en-US';
+import viVN_exception from '../../locales/exception/vi-VN';
+import enUS_exception from '../../locales/exception/en-US';
+
 export const namespaces = ["common","exception"]
 
 export const resources = {
 
-  'en-US': {
-    common: () => import('../../locales/common/en-US'),
-    exception: () => import('../../locales/exception/en-US'),
+  'vi-VN': {
+    common: viVN_common,
+    exception: viVN_exception,
   },
 
-  'vi-VN': {
-    common: () => import('../../locales/common/vi-VN'),
-    exception: () => import('../../locales/exception/vi-VN'),
+  'en-US': {
+    common: enUS_common,
+    exception: enUS_exception,
   },
+  
 }
