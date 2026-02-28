@@ -13,14 +13,13 @@ export default defineConfig({
           target: 'react',
           autoCodeSplitting: true,
           generatedRouteTree: 'src/route-tree.gen.ts',
-          routeFileIgnorePrefix: '___',
+          routeFileIgnorePrefix: '~',  
         }),
       ],
     },
   },
   html: {
     template: 'public/index.html',
-    title: 'thinhphoenix/react',
   },
   server: {
     port: envConfig.port,
