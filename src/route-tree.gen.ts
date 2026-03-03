@@ -12,12 +12,14 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as settingsRouteRouteImport } from './routes/(settings)/route'
 import { Route as mainRouteRouteImport } from './routes/(main)/route'
 import { Route as mainIndexRouteImport } from './routes/(main)/index'
-import { Route as mainConfigurationRouteImport } from './routes/(main)/configuration'
 import { Route as mainAuthorizeUserRouteImport } from './routes/(main)/authorize/user'
 import { Route as mainAuthorizeRoleRouteImport } from './routes/(main)/authorize/role'
 import { Route as mainAuthorizePermissionRouteImport } from './routes/(main)/authorize/permission'
 import { Route as mainAiProvidersRouteImport } from './routes/(main)/ai/providers'
 import { Route as mainAiModelsRouteImport } from './routes/(main)/ai/models'
+import { Route as mainShipWorkflowsIndexRouteImport } from './routes/(main)/ship/workflows/index'
+import { Route as mainShipStaticAndServerlessIndexRouteImport } from './routes/(main)/ship/static-and-serverless/index'
+import { Route as mainShipObservabilityIndexRouteImport } from './routes/(main)/ship/observability/index'
 
 const settingsRouteRoute = settingsRouteRouteImport.update({
   id: '/(settings)',
@@ -30,11 +32,6 @@ const mainRouteRoute = mainRouteRouteImport.update({
 const mainIndexRoute = mainIndexRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => mainRouteRoute,
-} as any)
-const mainConfigurationRoute = mainConfigurationRouteImport.update({
-  id: '/configuration',
-  path: '/configuration',
   getParentRoute: () => mainRouteRoute,
 } as any)
 const mainAuthorizeUserRoute = mainAuthorizeUserRouteImport.update({
@@ -62,67 +59,96 @@ const mainAiModelsRoute = mainAiModelsRouteImport.update({
   path: '/ai/models',
   getParentRoute: () => mainRouteRoute,
 } as any)
+const mainShipWorkflowsIndexRoute = mainShipWorkflowsIndexRouteImport.update({
+  id: '/ship/workflows/',
+  path: '/ship/workflows/',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainShipStaticAndServerlessIndexRoute =
+  mainShipStaticAndServerlessIndexRouteImport.update({
+    id: '/ship/static-and-serverless/',
+    path: '/ship/static-and-serverless/',
+    getParentRoute: () => mainRouteRoute,
+  } as any)
+const mainShipObservabilityIndexRoute =
+  mainShipObservabilityIndexRouteImport.update({
+    id: '/ship/observability/',
+    path: '/ship/observability/',
+    getParentRoute: () => mainRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
-  '/configuration': typeof mainConfigurationRoute
   '/': typeof mainIndexRoute
   '/ai/models': typeof mainAiModelsRoute
   '/ai/providers': typeof mainAiProvidersRoute
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
+  '/ship/observability': typeof mainShipObservabilityIndexRoute
+  '/ship/static-and-serverless': typeof mainShipStaticAndServerlessIndexRoute
+  '/ship/workflows': typeof mainShipWorkflowsIndexRoute
 }
 export interface FileRoutesByTo {
-  '/configuration': typeof mainConfigurationRoute
   '/': typeof mainIndexRoute
   '/ai/models': typeof mainAiModelsRoute
   '/ai/providers': typeof mainAiProvidersRoute
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
+  '/ship/observability': typeof mainShipObservabilityIndexRoute
+  '/ship/static-and-serverless': typeof mainShipStaticAndServerlessIndexRoute
+  '/ship/workflows': typeof mainShipWorkflowsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(main)': typeof mainRouteRouteWithChildren
   '/(settings)': typeof settingsRouteRoute
-  '/(main)/configuration': typeof mainConfigurationRoute
   '/(main)/': typeof mainIndexRoute
   '/(main)/ai/models': typeof mainAiModelsRoute
   '/(main)/ai/providers': typeof mainAiProvidersRoute
   '/(main)/authorize/permission': typeof mainAuthorizePermissionRoute
   '/(main)/authorize/role': typeof mainAuthorizeRoleRoute
   '/(main)/authorize/user': typeof mainAuthorizeUserRoute
+  '/(main)/ship/observability/': typeof mainShipObservabilityIndexRoute
+  '/(main)/ship/static-and-serverless/': typeof mainShipStaticAndServerlessIndexRoute
+  '/(main)/ship/workflows/': typeof mainShipWorkflowsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    | '/configuration'
     | '/'
     | '/ai/models'
     | '/ai/providers'
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
+    | '/ship/observability'
+    | '/ship/static-and-serverless'
+    | '/ship/workflows'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/configuration'
     | '/'
     | '/ai/models'
     | '/ai/providers'
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
+    | '/ship/observability'
+    | '/ship/static-and-serverless'
+    | '/ship/workflows'
   id:
     | '__root__'
     | '/(main)'
     | '/(settings)'
-    | '/(main)/configuration'
     | '/(main)/'
     | '/(main)/ai/models'
     | '/(main)/ai/providers'
     | '/(main)/authorize/permission'
     | '/(main)/authorize/role'
     | '/(main)/authorize/user'
+    | '/(main)/ship/observability/'
+    | '/(main)/ship/static-and-serverless/'
+    | '/(main)/ship/workflows/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -151,13 +177,6 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof mainIndexRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
-    '/(main)/configuration': {
-      id: '/(main)/configuration'
-      path: '/configuration'
-      fullPath: '/configuration'
-      preLoaderRoute: typeof mainConfigurationRouteImport
       parentRoute: typeof mainRouteRoute
     }
     '/(main)/authorize/user': {
@@ -195,27 +214,52 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof mainAiModelsRouteImport
       parentRoute: typeof mainRouteRoute
     }
+    '/(main)/ship/workflows/': {
+      id: '/(main)/ship/workflows/'
+      path: '/ship/workflows'
+      fullPath: '/ship/workflows'
+      preLoaderRoute: typeof mainShipWorkflowsIndexRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ship/static-and-serverless/': {
+      id: '/(main)/ship/static-and-serverless/'
+      path: '/ship/static-and-serverless'
+      fullPath: '/ship/static-and-serverless'
+      preLoaderRoute: typeof mainShipStaticAndServerlessIndexRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ship/observability/': {
+      id: '/(main)/ship/observability/'
+      path: '/ship/observability'
+      fullPath: '/ship/observability'
+      preLoaderRoute: typeof mainShipObservabilityIndexRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
   }
 }
 
 interface mainRouteRouteChildren {
-  mainConfigurationRoute: typeof mainConfigurationRoute
   mainIndexRoute: typeof mainIndexRoute
   mainAiModelsRoute: typeof mainAiModelsRoute
   mainAiProvidersRoute: typeof mainAiProvidersRoute
   mainAuthorizePermissionRoute: typeof mainAuthorizePermissionRoute
   mainAuthorizeRoleRoute: typeof mainAuthorizeRoleRoute
   mainAuthorizeUserRoute: typeof mainAuthorizeUserRoute
+  mainShipObservabilityIndexRoute: typeof mainShipObservabilityIndexRoute
+  mainShipStaticAndServerlessIndexRoute: typeof mainShipStaticAndServerlessIndexRoute
+  mainShipWorkflowsIndexRoute: typeof mainShipWorkflowsIndexRoute
 }
 
 const mainRouteRouteChildren: mainRouteRouteChildren = {
-  mainConfigurationRoute: mainConfigurationRoute,
   mainIndexRoute: mainIndexRoute,
   mainAiModelsRoute: mainAiModelsRoute,
   mainAiProvidersRoute: mainAiProvidersRoute,
   mainAuthorizePermissionRoute: mainAuthorizePermissionRoute,
   mainAuthorizeRoleRoute: mainAuthorizeRoleRoute,
   mainAuthorizeUserRoute: mainAuthorizeUserRoute,
+  mainShipObservabilityIndexRoute: mainShipObservabilityIndexRoute,
+  mainShipStaticAndServerlessIndexRoute: mainShipStaticAndServerlessIndexRoute,
+  mainShipWorkflowsIndexRoute: mainShipWorkflowsIndexRoute,
 }
 
 const mainRouteRouteWithChildren = mainRouteRoute._addFileChildren(

@@ -6,6 +6,7 @@ import {
   CaretRightIcon,
   CubeIcon,
   MagnifyingGlassIcon,
+  ShippingContainerIcon,
   SparkleIcon,
   SquaresFourIcon,
   UserCircleIcon,
@@ -74,6 +75,24 @@ const navigationItems = [
     ],
   },
   {
+    label: 'Ship',
+    icon: ShippingContainerIcon,
+    items: [
+      {
+        label: 'Observability',
+        to: '/ship/observability' as const,
+      },
+      {
+        label: 'Workflows',
+        to: '/ship/workflows' as const,
+      },
+      {
+        label: 'Static & Serverless',
+        to: '/ship/static-and-serverless' as const,
+      },
+    ],
+  },
+  {
     label: 'Authorize',
     icon: UserCircleIcon,
     items: [
@@ -110,6 +129,21 @@ const quickSearchItems = [
     to: '/ai/providers' as const,
   },
   {
+    label: 'Observability',
+    section: 'Ship',
+    to: '/ship/observability' as const,
+  },
+  {
+    label: 'Workflows',
+    section: 'Ship',
+    to: '/ship/workflows' as const,
+  },
+  {
+    label: 'Static & Serverless',
+    section: 'Ship',
+    to: '/ship/static-and-serverless' as const,
+  },
+  {
     label: 'Settings',
     section: 'Platform',
     to: '/configuration' as const,
@@ -139,6 +173,10 @@ const breadcrumbSegmentLabels: Record<string, string> = {
   permission: 'Permission',
   providers: 'Providers',
   role: 'Role',
+  ship: 'Ship',
+  observability: 'Observability',
+  workflows: 'Workflows',
+  'static-and-serverless': 'Static & Serverless',
   user: 'User',
 };
 
@@ -158,6 +196,7 @@ function RouteComponent() {
     AI:
       location.pathname.startsWith('/ai/models') ||
       location.pathname.startsWith('/ai/providers'),
+    Ship: location.pathname.startsWith('/ship/'),
   });
 
   React.useEffect(() => {
@@ -169,6 +208,9 @@ function RouteComponent() {
       location.pathname.startsWith('/ai/providers')
     ) {
       setOpenSubMenus((prev) => ({ ...prev, AI: true }));
+    }
+    if (location.pathname.startsWith('/ship/')) {
+      setOpenSubMenus((prev) => ({ ...prev, Ship: true }));
     }
   }, [location.pathname]);
 
@@ -456,10 +498,11 @@ function RouteComponent() {
                                 <DialogPrimitive.Close asChild>
                                   <Link
                                     to={item.to}
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${isSelected
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${
+                                      isSelected
                                         ? 'bg-muted'
                                         : 'hover:bg-muted focus:bg-muted'
-                                      }`}
+                                    }`}
                                   >
                                     <div className="flex items-center gap-3 w-full">
                                       <CubeIcon className="size-5 shrink-0 text-muted-foreground" />
@@ -476,10 +519,11 @@ function RouteComponent() {
                                       </div>
                                     </div>
                                     <ArrowRightIcon
-                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${isSelected
+                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${
+                                        isSelected
                                           ? 'opacity-100'
                                           : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
-                                        }`}
+                                      }`}
                                     />
                                   </Link>
                                 </DialogPrimitive.Close>
