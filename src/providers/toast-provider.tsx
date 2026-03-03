@@ -1,7 +1,8 @@
-import { setupApiInterceptors } from '@/helpers/axios-instance';
 import { message } from 'antd';
+import type React from 'react';
 import type { ReactNode } from 'react';
-import React, { createContext, useCallback, useEffect, useMemo } from 'react';
+import { createContext, useCallback, useEffect, useMemo } from 'react';
+import { setupApiInterceptors } from '@/helpers/axios-instance';
 
 export type ToastType = 'success' | 'error' | 'warning' | 'info';
 

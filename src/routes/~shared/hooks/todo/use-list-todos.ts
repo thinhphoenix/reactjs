@@ -1,10 +1,10 @@
-import api from '@/helpers/axios-instance';
-import i18n from '@/helpers/i18n';
-import { endpoints } from '@/services/endpoints';
-import { useToast } from '@/services/hooks/common/use-toast';
-import type { TodoDto } from '@/types/dto/todo.dto';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
+import api from '@/helpers/axios-instance';
+import i18n from '@/helpers/i18n';
+import type { TodoDto } from '@/routes/~shared/dto/todo.dto';
+import { endpoints } from '../../endpoints';
+import { useToast } from '../common/use-toast';
 
 export const useListTodos = (enabled: boolean) => {
   const toast = useToast();

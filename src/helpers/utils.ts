@@ -1,4 +1,10 @@
+import { type ClassValue, clsx } from 'clsx';
+import { twMerge } from 'tailwind-merge';
 import i18n from './i18n';
+
+export function cn(...inputs: ClassValue[]) {
+  return twMerge(clsx(inputs));
+}
 
 export const timeZone = () => {
   return Intl.DateTimeFormat().resolvedOptions().timeZone;

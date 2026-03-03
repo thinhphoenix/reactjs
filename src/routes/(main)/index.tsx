@@ -1,11 +1,11 @@
-import i18n from '@/helpers/i18n';
-import { useListTodos } from '@/services/hooks/todo/use-list-todos';
-import type { TodoDto } from '@/types/dto/todo.dto';
 import { createFileRoute } from '@tanstack/react-router';
 import { Button, Col, Row } from 'antd';
 import { useState } from 'react';
+import i18n from '@/helpers/i18n';
+import type { TodoDto } from '@/routes/~shared/dto/todo.dto';
+import { useListTodos } from '../~shared/hooks/todo/use-list-todos';
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute('/(main)/')({
   component: RouteComponent,
 });
 

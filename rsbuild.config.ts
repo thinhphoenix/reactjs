@@ -13,7 +13,7 @@ export default defineConfig({
           target: 'react',
           autoCodeSplitting: true,
           generatedRouteTree: 'src/route-tree.gen.ts',
-          routeFileIgnorePrefix: '~',  
+          routeFileIgnorePrefix: '~',
         }),
       ],
     },

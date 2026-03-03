@@ -1,0 +1,21 @@
+{
+  "$schema": "https://ui.shadcn.com/schema.json",
+  "style": "radix-nova",
+  "rsc": false,
+  "tsx": true,
+  "tailwind": {
+    "config": "",
+    "css": "src/global.css",
+    "baseColor": "neutral",
+    "cssVariables": true,
+    "prefix": ""
+  },
+  "aliases": {
+    "components": "@/routes/~shared/components",
+    "utils": "@/helpers/utils",
+    "ui": "@/routes/~shared/components/ui",
+    "lib": "@/helpers",
+    "hooks": "@/routes/~shared/hooks"
+  },
+  "iconLibrary": "phosphor"
+}

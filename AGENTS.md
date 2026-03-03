@@ -114,7 +114,7 @@ export const Route = createFileRoute('/')({
 
 - TanStack Router plugin configured in `rsbuild.config.ts` for file-based routing
 - Route tree auto-generated to `src/route-tree.gen.ts`
-- Route files with `___` prefix are ignored (e.g., `__root.tsx`)
+- Route files with `~` prefix are ignored (e.g., `~shared, ~video-card.tsx`)
 - Auto code splitting enabled for performance
 - Server base path configured via `envConfig.base`
 - All routes defined in `src/routes/` with pattern `*.tsx`
@@ -171,6 +171,7 @@ export const Route = createFileRoute('/home/')({
 - **Styling**: Tailwind CSS
 - **Routing**: @tanstack/react-router
 - **Data**: @tanstack/react-query, axios
-- **UI**: Ant Design (antd)
+- **UI**: shadcn/ui
 - **Internationalization**: react-i18next
 - **Linting**: Biome, Prettier
+- **CodeStructure**: param camelCase, file name kebeb-case, module based all place inside /routes (example: /user/~components, /user/index.tsx, ...) types, enums, dto of that module also place inside that module

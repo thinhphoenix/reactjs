@@ -1,7 +1,7 @@
+import axios from 'axios';
 import { envConfig } from '@/helpers/constants/env-config';
 import i18n from '@/helpers/i18n';
-import { TokenStorageType } from '@/types/enums/token-storage-type';
-import axios from 'axios';
+import { TokenStorageType } from '@/routes/~shared/enums/token-storage-type';
 
 const TOKEN_STORAGE_TYPE = TokenStorageType.LOCAL_STORAGE;
 const AUTH_TOKEN_KEY = 'authToken';
