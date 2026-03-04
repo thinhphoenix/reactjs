@@ -9,7 +9,6 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as settingsRouteRouteImport } from './routes/(settings)/route'
 import { Route as mainRouteRouteImport } from './routes/(main)/route'
 import { Route as mainIndexRouteImport } from './routes/(main)/index'
 import { Route as mainAuthorizeUserRouteImport } from './routes/(main)/authorize/user'
@@ -24,10 +23,6 @@ import { Route as mainShipWorkflowsIndexRouteImport } from './routes/(main)/ship
 import { Route as mainShipStaticAndServerlessIndexRouteImport } from './routes/(main)/ship/static-and-serverless/index'
 import { Route as mainShipObservabilityIndexRouteImport } from './routes/(main)/ship/observability/index'
 
-const settingsRouteRoute = settingsRouteRouteImport.update({
-  id: '/(settings)',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const mainRouteRoute = mainRouteRouteImport.update({
   id: '/(main)',
   getParentRoute: () => rootRouteImport,
@@ -126,7 +121,6 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(main)': typeof mainRouteRouteWithChildren
-  '/(settings)': typeof settingsRouteRoute
   '/(main)/': typeof mainIndexRoute
   '/(main)/ai/analytics': typeof mainAiAnalyticsRoute
   '/(main)/ai/configuration': typeof mainAiConfigurationRoute
@@ -172,7 +166,6 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/(main)'
-    | '/(settings)'
     | '/(main)/'
     | '/(main)/ai/analytics'
     | '/(main)/ai/configuration'
@@ -189,18 +182,10 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   mainRouteRoute: typeof mainRouteRouteWithChildren
-  settingsRouteRoute: typeof settingsRouteRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(settings)': {
-      id: '/(settings)'
-      path: ''
-      fullPath: ''
-      preLoaderRoute: typeof settingsRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/(main)': {
       id: '/(main)'
       path: ''
@@ -331,7 +316,6 @@ const mainRouteRouteWithChildren = mainRouteRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   mainRouteRoute: mainRouteRouteWithChildren,
-  settingsRouteRoute: settingsRouteRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
