@@ -15,8 +15,11 @@ import { Route as mainIndexRouteImport } from './routes/(main)/index'
 import { Route as mainAuthorizeUserRouteImport } from './routes/(main)/authorize/user'
 import { Route as mainAuthorizeRoleRouteImport } from './routes/(main)/authorize/role'
 import { Route as mainAuthorizePermissionRouteImport } from './routes/(main)/authorize/permission'
-import { Route as mainAiProvidersRouteImport } from './routes/(main)/ai/providers'
 import { Route as mainAiModelsRouteImport } from './routes/(main)/ai/models'
+import { Route as mainAiManageProvidersRouteImport } from './routes/(main)/ai/manage-providers'
+import { Route as mainAiManageModelsRouteImport } from './routes/(main)/ai/manage-models'
+import { Route as mainAiConfigurationRouteImport } from './routes/(main)/ai/configuration'
+import { Route as mainAiAnalyticsRouteImport } from './routes/(main)/ai/analytics'
 import { Route as mainShipWorkflowsIndexRouteImport } from './routes/(main)/ship/workflows/index'
 import { Route as mainShipStaticAndServerlessIndexRouteImport } from './routes/(main)/ship/static-and-serverless/index'
 import { Route as mainShipObservabilityIndexRouteImport } from './routes/(main)/ship/observability/index'
@@ -49,14 +52,29 @@ const mainAuthorizePermissionRoute = mainAuthorizePermissionRouteImport.update({
   path: '/authorize/permission',
   getParentRoute: () => mainRouteRoute,
 } as any)
-const mainAiProvidersRoute = mainAiProvidersRouteImport.update({
-  id: '/ai/providers',
-  path: '/ai/providers',
-  getParentRoute: () => mainRouteRoute,
-} as any)
 const mainAiModelsRoute = mainAiModelsRouteImport.update({
   id: '/ai/models',
   path: '/ai/models',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainAiManageProvidersRoute = mainAiManageProvidersRouteImport.update({
+  id: '/ai/manage-providers',
+  path: '/ai/manage-providers',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainAiManageModelsRoute = mainAiManageModelsRouteImport.update({
+  id: '/ai/manage-models',
+  path: '/ai/manage-models',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainAiConfigurationRoute = mainAiConfigurationRouteImport.update({
+  id: '/ai/configuration',
+  path: '/ai/configuration',
+  getParentRoute: () => mainRouteRoute,
+} as any)
+const mainAiAnalyticsRoute = mainAiAnalyticsRouteImport.update({
+  id: '/ai/analytics',
+  path: '/ai/analytics',
   getParentRoute: () => mainRouteRoute,
 } as any)
 const mainShipWorkflowsIndexRoute = mainShipWorkflowsIndexRouteImport.update({
@@ -79,8 +97,11 @@ const mainShipObservabilityIndexRoute =
 
 export interface FileRoutesByFullPath {
   '/': typeof mainIndexRoute
+  '/ai/analytics': typeof mainAiAnalyticsRoute
+  '/ai/configuration': typeof mainAiConfigurationRoute
+  '/ai/manage-models': typeof mainAiManageModelsRoute
+  '/ai/manage-providers': typeof mainAiManageProvidersRoute
   '/ai/models': typeof mainAiModelsRoute
-  '/ai/providers': typeof mainAiProvidersRoute
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
@@ -90,8 +111,11 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof mainIndexRoute
+  '/ai/analytics': typeof mainAiAnalyticsRoute
+  '/ai/configuration': typeof mainAiConfigurationRoute
+  '/ai/manage-models': typeof mainAiManageModelsRoute
+  '/ai/manage-providers': typeof mainAiManageProvidersRoute
   '/ai/models': typeof mainAiModelsRoute
-  '/ai/providers': typeof mainAiProvidersRoute
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
@@ -104,8 +128,11 @@ export interface FileRoutesById {
   '/(main)': typeof mainRouteRouteWithChildren
   '/(settings)': typeof settingsRouteRoute
   '/(main)/': typeof mainIndexRoute
+  '/(main)/ai/analytics': typeof mainAiAnalyticsRoute
+  '/(main)/ai/configuration': typeof mainAiConfigurationRoute
+  '/(main)/ai/manage-models': typeof mainAiManageModelsRoute
+  '/(main)/ai/manage-providers': typeof mainAiManageProvidersRoute
   '/(main)/ai/models': typeof mainAiModelsRoute
-  '/(main)/ai/providers': typeof mainAiProvidersRoute
   '/(main)/authorize/permission': typeof mainAuthorizePermissionRoute
   '/(main)/authorize/role': typeof mainAuthorizeRoleRoute
   '/(main)/authorize/user': typeof mainAuthorizeUserRoute
@@ -117,8 +144,11 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/ai/analytics'
+    | '/ai/configuration'
+    | '/ai/manage-models'
+    | '/ai/manage-providers'
     | '/ai/models'
-    | '/ai/providers'
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
@@ -128,8 +158,11 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/ai/analytics'
+    | '/ai/configuration'
+    | '/ai/manage-models'
+    | '/ai/manage-providers'
     | '/ai/models'
-    | '/ai/providers'
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
@@ -141,8 +174,11 @@ export interface FileRouteTypes {
     | '/(main)'
     | '/(settings)'
     | '/(main)/'
+    | '/(main)/ai/analytics'
+    | '/(main)/ai/configuration'
+    | '/(main)/ai/manage-models'
+    | '/(main)/ai/manage-providers'
     | '/(main)/ai/models'
-    | '/(main)/ai/providers'
     | '/(main)/authorize/permission'
     | '/(main)/authorize/role'
     | '/(main)/authorize/user'
@@ -200,18 +236,39 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof mainAuthorizePermissionRouteImport
       parentRoute: typeof mainRouteRoute
     }
-    '/(main)/ai/providers': {
-      id: '/(main)/ai/providers'
-      path: '/ai/providers'
-      fullPath: '/ai/providers'
-      preLoaderRoute: typeof mainAiProvidersRouteImport
-      parentRoute: typeof mainRouteRoute
-    }
     '/(main)/ai/models': {
       id: '/(main)/ai/models'
       path: '/ai/models'
       fullPath: '/ai/models'
       preLoaderRoute: typeof mainAiModelsRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ai/manage-providers': {
+      id: '/(main)/ai/manage-providers'
+      path: '/ai/manage-providers'
+      fullPath: '/ai/manage-providers'
+      preLoaderRoute: typeof mainAiManageProvidersRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ai/manage-models': {
+      id: '/(main)/ai/manage-models'
+      path: '/ai/manage-models'
+      fullPath: '/ai/manage-models'
+      preLoaderRoute: typeof mainAiManageModelsRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ai/configuration': {
+      id: '/(main)/ai/configuration'
+      path: '/ai/configuration'
+      fullPath: '/ai/configuration'
+      preLoaderRoute: typeof mainAiConfigurationRouteImport
+      parentRoute: typeof mainRouteRoute
+    }
+    '/(main)/ai/analytics': {
+      id: '/(main)/ai/analytics'
+      path: '/ai/analytics'
+      fullPath: '/ai/analytics'
+      preLoaderRoute: typeof mainAiAnalyticsRouteImport
       parentRoute: typeof mainRouteRoute
     }
     '/(main)/ship/workflows/': {
@@ -240,8 +297,11 @@ declare module '@tanstack/react-router' {
 
 interface mainRouteRouteChildren {
   mainIndexRoute: typeof mainIndexRoute
+  mainAiAnalyticsRoute: typeof mainAiAnalyticsRoute
+  mainAiConfigurationRoute: typeof mainAiConfigurationRoute
+  mainAiManageModelsRoute: typeof mainAiManageModelsRoute
+  mainAiManageProvidersRoute: typeof mainAiManageProvidersRoute
   mainAiModelsRoute: typeof mainAiModelsRoute
-  mainAiProvidersRoute: typeof mainAiProvidersRoute
   mainAuthorizePermissionRoute: typeof mainAuthorizePermissionRoute
   mainAuthorizeRoleRoute: typeof mainAuthorizeRoleRoute
   mainAuthorizeUserRoute: typeof mainAuthorizeUserRoute
@@ -252,8 +312,11 @@ interface mainRouteRouteChildren {
 
 const mainRouteRouteChildren: mainRouteRouteChildren = {
   mainIndexRoute: mainIndexRoute,
+  mainAiAnalyticsRoute: mainAiAnalyticsRoute,
+  mainAiConfigurationRoute: mainAiConfigurationRoute,
+  mainAiManageModelsRoute: mainAiManageModelsRoute,
+  mainAiManageProvidersRoute: mainAiManageProvidersRoute,
   mainAiModelsRoute: mainAiModelsRoute,
-  mainAiProvidersRoute: mainAiProvidersRoute,
   mainAuthorizePermissionRoute: mainAuthorizePermissionRoute,
   mainAuthorizeRoleRoute: mainAuthorizeRoleRoute,
   mainAuthorizeUserRoute: mainAuthorizeUserRoute,

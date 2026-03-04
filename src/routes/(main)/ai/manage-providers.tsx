@@ -1,6 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 
-export const Route = createFileRoute('/(main)/ai/providers')({
+export const Route = createFileRoute('/(main)/ai/manage-providers')({
   component: RouteComponent,
 });
 

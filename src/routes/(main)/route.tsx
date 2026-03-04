@@ -6,6 +6,7 @@ import {
   CaretRightIcon,
   CubeIcon,
   MagnifyingGlassIcon,
+  ShieldStarIcon,
   ShippingContainerIcon,
   SparkleIcon,
   SquaresFourIcon,
@@ -20,6 +21,12 @@ import {
 } from '@tanstack/react-router';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import * as React from 'react';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/routes/~shared/components/ui/dropdown-menu';
 import { Kbd } from '@/routes/~shared/components/ui/kbd';
 import {
   Sidebar,
@@ -41,6 +48,7 @@ import {
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
+  useSidebar,
 } from '@/routes/~shared/components/ui/sidebar';
 import { TooltipProvider } from '@/routes/~shared/components/ui/tooltip';
 
@@ -69,8 +77,24 @@ const navigationItems = [
         to: '/ai/models' as const,
       },
       {
-        label: 'Providers',
-        to: '/ai/providers' as const,
+        label: 'Manage Models',
+        to: '/ai/manage-models' as const,
+        badgeIcon: ShieldStarIcon,
+      },
+      {
+        label: 'Manage Providers',
+        to: '/ai/manage-providers' as const,
+        badgeIcon: ShieldStarIcon,
+      },
+      {
+        label: 'Analytics',
+        to: '/ai/analytics' as const,
+        badgeIcon: ShieldStarIcon,
+      },
+      {
+        label: 'Configuration',
+        to: '/ai/configuration' as const,
+        badgeIcon: ShieldStarIcon,
       },
     ],
   },
@@ -99,14 +123,17 @@ const navigationItems = [
       {
         label: 'User',
         to: '/authorize/user' as const,
+        badgeIcon: ShieldStarIcon,
       },
       {
         label: 'Permission',
         to: '/authorize/permission' as const,
+        badgeIcon: ShieldStarIcon,
       },
       {
         label: 'Role',
         to: '/authorize/role' as const,
+        badgeIcon: ShieldStarIcon,
       },
     ],
   },
@@ -124,9 +151,24 @@ const quickSearchItems = [
     to: '/ai/models' as const,
   },
   {
-    label: 'Providers',
+    label: 'Manage Models',
     section: 'AI',
-    to: '/ai/providers' as const,
+    to: '/ai/manage-models' as const,
+  },
+  {
+    label: 'Manage Providers',
+    section: 'AI',
+    to: '/ai/manage-providers' as const,
+  },
+  {
+    label: 'Analytics',
+    section: 'AI',
+    to: '/ai/analytics' as const,
+  },
+  {
+    label: 'Configuration',
+    section: 'AI',
+    to: '/ai/configuration' as const,
   },
   {
     label: 'Observability',
@@ -170,8 +212,10 @@ const breadcrumbSegmentLabels: Record<string, string> = {
   ai: 'AI',
   configuration: 'Settings',
   models: 'Models',
+  'manage-models': 'Manage Models',
   permission: 'Permission',
-  providers: 'Providers',
+  'manage-providers': 'Manage Providers',
+  analytics: 'Analytics',
   role: 'Role',
   ship: 'Ship',
   observability: 'Observability',
@@ -179,6 +223,93 @@ const breadcrumbSegmentLabels: Record<string, string> = {
   'static-and-serverless': 'Static & Serverless',
   user: 'User',
 };
+
+function CollapsibleNavItem({
+  item,
+  icon: Icon,
+  isOpen,
+  onToggle,
+}: {
+  item: (typeof navigationItems)[number] & {
+    items: { label: string; to: string; badgeIcon?: React.ComponentType<{ className?: string }> }[];
+  };
+  icon: React.ComponentType;
+  isOpen: boolean;
+  onToggle: () => void;
+}) {
+  const { state } = useSidebar();
+  const isCollapsed = state === 'collapsed';
+
+  if (isCollapsed) {
+    return (
+      <SidebarMenuItem>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <SidebarMenuButton tooltip={item.label} type="button">
+              <Icon />
+              <span className="group-data-[collapsible=icon]:hidden">
+                {item.label}
+              </span>
+            </SidebarMenuButton>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right" align="start" sideOffset={4}>
+            {item.items.map((subItem) => {
+              const BadgeIcon = subItem.badgeIcon;
+              return (
+                <DropdownMenuItem key={subItem.label} asChild>
+                  <Link to={subItem.to}>
+                    {subItem.label}
+                    {BadgeIcon && <BadgeIcon className="ml-auto size-3.5 shrink-0 text-red-500" />}
+                  </Link>
+                </DropdownMenuItem>
+              );
+            })}
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarMenuItem>
+    );
+  }
+
+  return (
+    <SidebarMenuItem>
+      <SidebarMenuButton
+        tooltip={item.label}
+        type="button"
+        onClick={onToggle}
+        aria-expanded={isOpen}
+      >
+        <Icon />
+        <span className="group-data-[collapsible=icon]:hidden">
+          {item.label}
+        </span>
+        <CaretRightIcon
+          className={
+            isOpen
+              ? 'ml-auto rotate-90 transition-transform duration-200 group-data-[collapsible=icon]:hidden'
+              : 'ml-auto transition-transform duration-200 group-data-[collapsible=icon]:hidden'
+          }
+        />
+      </SidebarMenuButton>
+      {isOpen ? (
+        <SidebarMenuSub>
+          {item.items.map((subItem) => {
+            const BadgeIcon = subItem.badgeIcon;
+            return (
+              <SidebarMenuSubItem key={subItem.label}>
+                <SidebarMenuSubButton asChild>
+                  <Link to={subItem.to}>
+                    <span>{subItem.label}</span>
+                    {BadgeIcon && <BadgeIcon className="size-3.5 shrink-0 text-red-500/40! group-hover/menu-sub-item:text-red-500!" />}
+                  </Link>
+                </SidebarMenuSubButton>
+              </SidebarMenuSubItem>
+            );
+          })}
+        </SidebarMenuSub>
+      ) : null}
+    </SidebarMenuItem>
+  );
+}
 
 function RouteComponent() {
   const location = useLocation();
@@ -193,9 +324,7 @@ function RouteComponent() {
     Record<string, boolean>
   >({
     Authorize: location.pathname.startsWith('/authorize/'),
-    AI:
-      location.pathname.startsWith('/ai/models') ||
-      location.pathname.startsWith('/ai/providers'),
+    AI: location.pathname.startsWith('/ai/'),
     Ship: location.pathname.startsWith('/ship/'),
   });
 
@@ -203,10 +332,7 @@ function RouteComponent() {
     if (location.pathname.startsWith('/authorize/')) {
       setOpenSubMenus((prev) => ({ ...prev, Authorize: true }));
     }
-    if (
-      location.pathname.startsWith('/ai/models') ||
-      location.pathname.startsWith('/ai/providers')
-    ) {
+    if (location.pathname.startsWith('/ai/')) {
       setOpenSubMenus((prev) => ({ ...prev, AI: true }));
     }
     if (location.pathname.startsWith('/ship/')) {
@@ -334,7 +460,7 @@ function RouteComponent() {
                       className="h-9 border border-input shadow-xs text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all px-2.5"
                     >
                       <MagnifyingGlassIcon />
-                      <span>Quick search...</span>
+                      <span className="group-data-[collapsible=icon]:hidden">Quick search...</span>
                       <div className="ml-auto flex items-center gap-1 group-data-[collapsible=icon]:hidden">
                         <Kbd className="flex h-5 select-none items-center justify-center rounded-[4px] border border-sidebar-border bg-sidebar-accent/60 px-1.5 font-mono text-[10px] font-medium text-sidebar-foreground/70 shadow-[0_2px_0_rgba(0,0,0,0.04)] sm:flex tracking-wide">
                           {isMacOs ? '⌘' : 'Ctrl'}
@@ -359,40 +485,14 @@ function RouteComponent() {
                     const Icon = item.icon;
 
                     if (item.items) {
-                      const isOpen = Boolean(openSubMenus[item.label]);
-
                       return (
-                        <SidebarMenuItem key={item.label}>
-                          <SidebarMenuButton
-                            tooltip={item.label}
-                            type="button"
-                            onClick={() => toggleSubMenu(item.label)}
-                            aria-expanded={isOpen}
-                          >
-                            <Icon />
-                            <span>{item.label}</span>
-                            <CaretRightIcon
-                              className={
-                                isOpen
-                                  ? 'ml-auto rotate-90 transition-transform duration-200'
-                                  : 'ml-auto transition-transform duration-200'
-                              }
-                            />
-                          </SidebarMenuButton>
-                          {isOpen ? (
-                            <SidebarMenuSub>
-                              {item.items.map((subItem) => (
-                                <SidebarMenuSubItem key={subItem.label}>
-                                  <SidebarMenuSubButton asChild>
-                                    <Link to={subItem.to}>
-                                      <span>{subItem.label}</span>
-                                    </Link>
-                                  </SidebarMenuSubButton>
-                                </SidebarMenuSubItem>
-                              ))}
-                            </SidebarMenuSub>
-                          ) : null}
-                        </SidebarMenuItem>
+                        <CollapsibleNavItem
+                          key={item.label}
+                          item={item}
+                          icon={Icon}
+                          isOpen={Boolean(openSubMenus[item.label])}
+                          onToggle={() => toggleSubMenu(item.label)}
+                        />
                       );
                     }
 
@@ -405,7 +505,7 @@ function RouteComponent() {
                         <SidebarMenuButton asChild tooltip={item.label}>
                           <Link to={item.to}>
                             <Icon />
-                            <span>{item.label}</span>
+                            <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -498,11 +598,10 @@ function RouteComponent() {
                                 <DialogPrimitive.Close asChild>
                                   <Link
                                     to={item.to}
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${
-                                      isSelected
-                                        ? 'bg-muted'
-                                        : 'hover:bg-muted focus:bg-muted'
-                                    }`}
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${isSelected
+                                      ? 'bg-muted'
+                                      : 'hover:bg-muted focus:bg-muted'
+                                      }`}
                                   >
                                     <div className="flex items-center gap-3 w-full">
                                       <CubeIcon className="size-5 shrink-0 text-muted-foreground" />
@@ -519,11 +618,10 @@ function RouteComponent() {
                                       </div>
                                     </div>
                                     <ArrowRightIcon
-                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${
-                                        isSelected
-                                          ? 'opacity-100'
-                                          : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
-                                      }`}
+                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${isSelected
+                                        ? 'opacity-100'
+                                        : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
+                                        }`}
                                     />
                                   </Link>
                                 </DialogPrimitive.Close>
