@@ -21,6 +21,7 @@ import {
 } from '@tanstack/react-router';
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import * as React from 'react';
+import { cn } from '@/helpers/utils';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -231,13 +232,18 @@ function CollapsibleNavItem({
   onToggle,
 }: {
   item: (typeof navigationItems)[number] & {
-    items: { label: string; to: string; badgeIcon?: React.ComponentType<{ className?: string }> }[];
+    items: {
+      label: string;
+      to: string;
+      badgeIcon?: React.ComponentType<{ className?: string }>;
+    }[];
   };
   icon: React.ComponentType;
   isOpen: boolean;
   onToggle: () => void;
 }) {
   const { state } = useSidebar();
+  const location = useLocation();
   const isCollapsed = state === 'collapsed';
 
   if (isCollapsed) {
@@ -255,11 +261,20 @@ function CollapsibleNavItem({
           <DropdownMenuContent side="right" align="start" sideOffset={4}>
             {item.items.map((subItem) => {
               const BadgeIcon = subItem.badgeIcon;
+              const isSubActive = location.pathname === subItem.to;
               return (
-                <DropdownMenuItem key={subItem.label} asChild>
+                <DropdownMenuItem
+                  key={subItem.label}
+                  asChild
+                  className={
+                    isSubActive ? 'bg-accent text-accent-foreground' : undefined
+                  }
+                >
                   <Link to={subItem.to}>
                     {subItem.label}
-                    {BadgeIcon && <BadgeIcon className="ml-auto size-3.5 shrink-0 text-red-500" />}
+                    {BadgeIcon && (
+                      <BadgeIcon className="ml-auto size-3.5 shrink-0 text-red-500" />
+                    )}
                   </Link>
                 </DropdownMenuItem>
               );
@@ -294,12 +309,22 @@ function CollapsibleNavItem({
         <SidebarMenuSub>
           {item.items.map((subItem) => {
             const BadgeIcon = subItem.badgeIcon;
+            const isSubActive = location.pathname === subItem.to;
             return (
               <SidebarMenuSubItem key={subItem.label}>
-                <SidebarMenuSubButton asChild>
+                <SidebarMenuSubButton asChild isActive={isSubActive}>
                   <Link to={subItem.to}>
                     <span>{subItem.label}</span>
-                    {BadgeIcon && <BadgeIcon className="size-3.5 shrink-0 text-red-500/40! group-hover/menu-sub-item:text-red-500!" />}
+                    {BadgeIcon && (
+                      <BadgeIcon
+                        className={cn(
+                          'size-3.5 shrink-0',
+                          isSubActive
+                            ? '!text-red-500'
+                            : '!text-red-500/40 group-hover/menu-sub-item:!text-red-500',
+                        )}
+                      />
+                    )}
                   </Link>
                 </SidebarMenuSubButton>
               </SidebarMenuSubItem>
@@ -460,7 +485,9 @@ function RouteComponent() {
                       className="h-9 border border-input shadow-xs text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all px-2.5"
                     >
                       <MagnifyingGlassIcon />
-                      <span className="group-data-[collapsible=icon]:hidden">Quick search...</span>
+                      <span className="group-data-[collapsible=icon]:hidden">
+                        Quick search...
+                      </span>
                       <div className="ml-auto flex items-center gap-1 group-data-[collapsible=icon]:hidden">
                         <Kbd className="flex h-5 select-none items-center justify-center rounded-[4px] border border-sidebar-border bg-sidebar-accent/60 px-1.5 font-mono text-[10px] font-medium text-sidebar-foreground/70 shadow-[0_2px_0_rgba(0,0,0,0.04)] sm:flex tracking-wide">
                           {isMacOs ? '⌘' : 'Ctrl'}
@@ -500,12 +527,20 @@ function RouteComponent() {
                       return null;
                     }
 
+                    const isActive = location.pathname === item.to;
+
                     return (
                       <SidebarMenuItem key={item.label}>
-                        <SidebarMenuButton asChild tooltip={item.label}>
+                        <SidebarMenuButton
+                          asChild
+                          tooltip={item.label}
+                          isActive={isActive}
+                        >
                           <Link to={item.to}>
                             <Icon />
-                            <span className="group-data-[collapsible=icon]:hidden">{item.label}</span>
+                            <span className="group-data-[collapsible=icon]:hidden">
+                              {item.label}
+                            </span>
                           </Link>
                         </SidebarMenuButton>
                       </SidebarMenuItem>
@@ -598,10 +633,11 @@ function RouteComponent() {
                                 <DialogPrimitive.Close asChild>
                                   <Link
                                     to={item.to}
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${isSelected
-                                      ? 'bg-muted'
-                                      : 'hover:bg-muted focus:bg-muted'
-                                      }`}
+                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${
+                                      isSelected
+                                        ? 'bg-muted'
+                                        : 'hover:bg-muted focus:bg-muted'
+                                    }`}
                                   >
                                     <div className="flex items-center gap-3 w-full">
                                       <CubeIcon className="size-5 shrink-0 text-muted-foreground" />
@@ -618,10 +654,11 @@ function RouteComponent() {
                                       </div>
                                     </div>
                                     <ArrowRightIcon
-                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${isSelected
-                                        ? 'opacity-100'
-                                        : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
-                                        }`}
+                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${
+                                        isSelected
+                                          ? 'opacity-100'
+                                          : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
+                                      }`}
                                     />
                                   </Link>
                                 </DialogPrimitive.Close>
