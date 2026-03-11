@@ -9,8 +9,14 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SettingsRouteRouteImport } from './routes/settings/route'
 import { Route as mainRouteRouteImport } from './routes/(main)/route'
 import { Route as mainIndexRouteImport } from './routes/(main)/index'
+import { Route as SettingsProfileIndexRouteImport } from './routes/settings/profile/index'
+import { Route as SettingsNotificationsIndexRouteImport } from './routes/settings/notifications/index'
+import { Route as SettingsGeneralIndexRouteImport } from './routes/settings/general/index'
+import { Route as SettingsAccountIndexRouteImport } from './routes/settings/account/index'
+import { Route as SettingsAccessibilityIndexRouteImport } from './routes/settings/accessibility/index'
 import { Route as mainAuthorizeUserRouteImport } from './routes/(main)/authorize/user'
 import { Route as mainAuthorizeRoleRouteImport } from './routes/(main)/authorize/role'
 import { Route as mainAuthorizePermissionRouteImport } from './routes/(main)/authorize/permission'
@@ -23,6 +29,11 @@ import { Route as mainShipWorkflowsIndexRouteImport } from './routes/(main)/ship
 import { Route as mainShipStaticAndServerlessIndexRouteImport } from './routes/(main)/ship/static-and-serverless/index'
 import { Route as mainShipObservabilityIndexRouteImport } from './routes/(main)/ship/observability/index'
 
+const SettingsRouteRoute = SettingsRouteRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const mainRouteRoute = mainRouteRouteImport.update({
   id: '/(main)',
   getParentRoute: () => rootRouteImport,
@@ -32,6 +43,33 @@ const mainIndexRoute = mainIndexRouteImport.update({
   path: '/',
   getParentRoute: () => mainRouteRoute,
 } as any)
+const SettingsProfileIndexRoute = SettingsProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => SettingsRouteRoute,
+} as any)
+const SettingsNotificationsIndexRoute =
+  SettingsNotificationsIndexRouteImport.update({
+    id: '/notifications/',
+    path: '/notifications/',
+    getParentRoute: () => SettingsRouteRoute,
+  } as any)
+const SettingsGeneralIndexRoute = SettingsGeneralIndexRouteImport.update({
+  id: '/general/',
+  path: '/general/',
+  getParentRoute: () => SettingsRouteRoute,
+} as any)
+const SettingsAccountIndexRoute = SettingsAccountIndexRouteImport.update({
+  id: '/account/',
+  path: '/account/',
+  getParentRoute: () => SettingsRouteRoute,
+} as any)
+const SettingsAccessibilityIndexRoute =
+  SettingsAccessibilityIndexRouteImport.update({
+    id: '/accessibility/',
+    path: '/accessibility/',
+    getParentRoute: () => SettingsRouteRoute,
+  } as any)
 const mainAuthorizeUserRoute = mainAuthorizeUserRouteImport.update({
   id: '/authorize/user',
   path: '/authorize/user',
@@ -91,6 +129,7 @@ const mainShipObservabilityIndexRoute =
   } as any)
 
 export interface FileRoutesByFullPath {
+  '/settings': typeof SettingsRouteRouteWithChildren
   '/': typeof mainIndexRoute
   '/ai/analytics': typeof mainAiAnalyticsRoute
   '/ai/configuration': typeof mainAiConfigurationRoute
@@ -100,11 +139,17 @@ export interface FileRoutesByFullPath {
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
+  '/settings/accessibility': typeof SettingsAccessibilityIndexRoute
+  '/settings/account': typeof SettingsAccountIndexRoute
+  '/settings/general': typeof SettingsGeneralIndexRoute
+  '/settings/notifications': typeof SettingsNotificationsIndexRoute
+  '/settings/profile': typeof SettingsProfileIndexRoute
   '/ship/observability': typeof mainShipObservabilityIndexRoute
   '/ship/static-and-serverless': typeof mainShipStaticAndServerlessIndexRoute
   '/ship/workflows': typeof mainShipWorkflowsIndexRoute
 }
 export interface FileRoutesByTo {
+  '/settings': typeof SettingsRouteRouteWithChildren
   '/': typeof mainIndexRoute
   '/ai/analytics': typeof mainAiAnalyticsRoute
   '/ai/configuration': typeof mainAiConfigurationRoute
@@ -114,6 +159,11 @@ export interface FileRoutesByTo {
   '/authorize/permission': typeof mainAuthorizePermissionRoute
   '/authorize/role': typeof mainAuthorizeRoleRoute
   '/authorize/user': typeof mainAuthorizeUserRoute
+  '/settings/accessibility': typeof SettingsAccessibilityIndexRoute
+  '/settings/account': typeof SettingsAccountIndexRoute
+  '/settings/general': typeof SettingsGeneralIndexRoute
+  '/settings/notifications': typeof SettingsNotificationsIndexRoute
+  '/settings/profile': typeof SettingsProfileIndexRoute
   '/ship/observability': typeof mainShipObservabilityIndexRoute
   '/ship/static-and-serverless': typeof mainShipStaticAndServerlessIndexRoute
   '/ship/workflows': typeof mainShipWorkflowsIndexRoute
@@ -121,6 +171,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/(main)': typeof mainRouteRouteWithChildren
+  '/settings': typeof SettingsRouteRouteWithChildren
   '/(main)/': typeof mainIndexRoute
   '/(main)/ai/analytics': typeof mainAiAnalyticsRoute
   '/(main)/ai/configuration': typeof mainAiConfigurationRoute
@@ -130,6 +181,11 @@ export interface FileRoutesById {
   '/(main)/authorize/permission': typeof mainAuthorizePermissionRoute
   '/(main)/authorize/role': typeof mainAuthorizeRoleRoute
   '/(main)/authorize/user': typeof mainAuthorizeUserRoute
+  '/settings/accessibility/': typeof SettingsAccessibilityIndexRoute
+  '/settings/account/': typeof SettingsAccountIndexRoute
+  '/settings/general/': typeof SettingsGeneralIndexRoute
+  '/settings/notifications/': typeof SettingsNotificationsIndexRoute
+  '/settings/profile/': typeof SettingsProfileIndexRoute
   '/(main)/ship/observability/': typeof mainShipObservabilityIndexRoute
   '/(main)/ship/static-and-serverless/': typeof mainShipStaticAndServerlessIndexRoute
   '/(main)/ship/workflows/': typeof mainShipWorkflowsIndexRoute
@@ -137,6 +193,7 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
+    | '/settings'
     | '/'
     | '/ai/analytics'
     | '/ai/configuration'
@@ -146,11 +203,17 @@ export interface FileRouteTypes {
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
+    | '/settings/accessibility'
+    | '/settings/account'
+    | '/settings/general'
+    | '/settings/notifications'
+    | '/settings/profile'
     | '/ship/observability'
     | '/ship/static-and-serverless'
     | '/ship/workflows'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/settings'
     | '/'
     | '/ai/analytics'
     | '/ai/configuration'
@@ -160,12 +223,18 @@ export interface FileRouteTypes {
     | '/authorize/permission'
     | '/authorize/role'
     | '/authorize/user'
+    | '/settings/accessibility'
+    | '/settings/account'
+    | '/settings/general'
+    | '/settings/notifications'
+    | '/settings/profile'
     | '/ship/observability'
     | '/ship/static-and-serverless'
     | '/ship/workflows'
   id:
     | '__root__'
     | '/(main)'
+    | '/settings'
     | '/(main)/'
     | '/(main)/ai/analytics'
     | '/(main)/ai/configuration'
@@ -175,6 +244,11 @@ export interface FileRouteTypes {
     | '/(main)/authorize/permission'
     | '/(main)/authorize/role'
     | '/(main)/authorize/user'
+    | '/settings/accessibility/'
+    | '/settings/account/'
+    | '/settings/general/'
+    | '/settings/notifications/'
+    | '/settings/profile/'
     | '/(main)/ship/observability/'
     | '/(main)/ship/static-and-serverless/'
     | '/(main)/ship/workflows/'
@@ -182,10 +256,18 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   mainRouteRoute: typeof mainRouteRouteWithChildren
+  SettingsRouteRoute: typeof SettingsRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/settings': {
+      id: '/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof SettingsRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/(main)': {
       id: '/(main)'
       path: ''
@@ -199,6 +281,41 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof mainIndexRouteImport
       parentRoute: typeof mainRouteRoute
+    }
+    '/settings/profile/': {
+      id: '/settings/profile/'
+      path: '/profile'
+      fullPath: '/settings/profile'
+      preLoaderRoute: typeof SettingsProfileIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
+    }
+    '/settings/notifications/': {
+      id: '/settings/notifications/'
+      path: '/notifications'
+      fullPath: '/settings/notifications'
+      preLoaderRoute: typeof SettingsNotificationsIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
+    }
+    '/settings/general/': {
+      id: '/settings/general/'
+      path: '/general'
+      fullPath: '/settings/general'
+      preLoaderRoute: typeof SettingsGeneralIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
+    }
+    '/settings/account/': {
+      id: '/settings/account/'
+      path: '/account'
+      fullPath: '/settings/account'
+      preLoaderRoute: typeof SettingsAccountIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
+    }
+    '/settings/accessibility/': {
+      id: '/settings/accessibility/'
+      path: '/accessibility'
+      fullPath: '/settings/accessibility'
+      preLoaderRoute: typeof SettingsAccessibilityIndexRouteImport
+      parentRoute: typeof SettingsRouteRoute
     }
     '/(main)/authorize/user': {
       id: '/(main)/authorize/user'
@@ -314,8 +431,29 @@ const mainRouteRouteWithChildren = mainRouteRoute._addFileChildren(
   mainRouteRouteChildren,
 )
 
+interface SettingsRouteRouteChildren {
+  SettingsAccessibilityIndexRoute: typeof SettingsAccessibilityIndexRoute
+  SettingsAccountIndexRoute: typeof SettingsAccountIndexRoute
+  SettingsGeneralIndexRoute: typeof SettingsGeneralIndexRoute
+  SettingsNotificationsIndexRoute: typeof SettingsNotificationsIndexRoute
+  SettingsProfileIndexRoute: typeof SettingsProfileIndexRoute
+}
+
+const SettingsRouteRouteChildren: SettingsRouteRouteChildren = {
+  SettingsAccessibilityIndexRoute: SettingsAccessibilityIndexRoute,
+  SettingsAccountIndexRoute: SettingsAccountIndexRoute,
+  SettingsGeneralIndexRoute: SettingsGeneralIndexRoute,
+  SettingsNotificationsIndexRoute: SettingsNotificationsIndexRoute,
+  SettingsProfileIndexRoute: SettingsProfileIndexRoute,
+}
+
+const SettingsRouteRouteWithChildren = SettingsRouteRoute._addFileChildren(
+  SettingsRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   mainRouteRoute: mainRouteRouteWithChildren,
+  SettingsRouteRoute: SettingsRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

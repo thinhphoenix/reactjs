@@ -843,12 +843,14 @@ function SidebarAccountManagement({
             </DropdownMenuLabel>
             <DropdownMenuSeparator />
             <DropdownMenuGroup>
-              <DropdownMenuItem>
-                <UserIcon />
-                Profile
+              <DropdownMenuItem asChild>
+                <Link to="/settings/profile">
+                  <UserIcon />
+                  Profile
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
-                <Link to="/configuration">
+                <Link to="/settings/appearance">
                   <GearIcon />
                   Settings
                 </Link>

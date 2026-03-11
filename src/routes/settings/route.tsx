@@ -1,16 +1,14 @@
 import {
   ArrowBendDownLeftIcon,
   ArrowDownIcon,
+  ArrowLeftIcon,
   ArrowRightIcon,
   ArrowUpIcon,
-  CaretRightIcon,
-  CubeIcon,
+  BellIcon,
+  PersonIcon,
   GearIcon,
   MagnifyingGlassIcon,
-  ShieldStarIcon,
-  ShippingContainerIcon,
-  SparkleIcon,
-  SquaresFourIcon,
+  PaintBrushIcon,
   UserCircleIcon,
 } from '@phosphor-icons/react';
 import {
@@ -23,18 +21,10 @@ import {
 import { Dialog as DialogPrimitive } from 'radix-ui';
 import * as React from 'react';
 import { cn } from '@/helpers/utils';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from '@/routes/~shared/components/ui/dropdown-menu';
 import { Kbd } from '@/routes/~shared/components/ui/kbd';
 import {
   Sidebar,
-  SidebarAccountManagement,
   SidebarContent,
-  SidebarCorpChoosing,
   SidebarFooter,
   SidebarGroup,
   SidebarGroupContent,
@@ -44,327 +34,89 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-  SidebarMenuSub,
-  SidebarMenuSubButton,
-  SidebarMenuSubItem,
   SidebarProvider,
   SidebarRail,
   SidebarTrigger,
-  useSidebar,
 } from '@/routes/~shared/components/ui/sidebar';
 import { TooltipProvider } from '@/routes/~shared/components/ui/tooltip';
 
-export const Route = createFileRoute('/(main)')({
+export const Route = createFileRoute('/settings')({
   component: RouteComponent,
 });
 
-const corps = [
-  { name: 'Acme Inc', plan: 'Enterprise' },
-  { name: 'Globex Corp', plan: 'Business' },
-  { name: 'Initech', plan: 'Free' },
-];
-
-const navigationItems = [
+const settingsNavigationItems = [
   {
-    label: 'Overview',
-    to: '/' as const,
-    icon: SquaresFourIcon,
+    label: 'Appearance',
+    to: '/settings/appearance' as const,
+    icon: PaintBrushIcon,
   },
   {
-    label: 'AI',
-    icon: SparkleIcon,
-    items: [
-      {
-        label: 'Models',
-        to: '/ai/models' as const,
-      },
-      {
-        label: 'Manage Models',
-        to: '/ai/manage-models' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-      {
-        label: 'Manage Providers',
-        to: '/ai/manage-providers' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-      {
-        label: 'Analytics',
-        to: '/ai/analytics' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-      {
-        label: 'Configuration',
-        to: '/ai/configuration' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-    ],
+    label: 'Account',
+    to: '/settings/account' as const,
+    icon: GearIcon,
   },
   {
-    label: 'Ship',
-    icon: ShippingContainerIcon,
-    items: [
-      {
-        label: 'Observability',
-        to: '/ship/observability' as const,
-      },
-      {
-        label: 'Workflows',
-        to: '/ship/workflows' as const,
-      },
-      {
-        label: 'Static & Serverless',
-        to: '/ship/static-and-serverless' as const,
-      },
-    ],
-  },
-  {
-    label: 'Authorize',
+    label: 'Profile',
+    to: '/settings/profile' as const,
     icon: UserCircleIcon,
-    items: [
-      {
-        label: 'User',
-        to: '/authorize/user' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-      {
-        label: 'Permission',
-        to: '/authorize/permission' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-      {
-        label: 'Role',
-        to: '/authorize/role' as const,
-        badgeIcon: ShieldStarIcon,
-      },
-    ],
+  },
+  {
+    label: 'Notifications',
+    to: '/settings/notifications' as const,
+    icon: BellIcon,
+  },
+  {
+    label: 'Accessibility',
+    to: '/settings/accessibility' as const,
+    icon: PersonIcon,
   },
 ];
 
 const quickSearchItems = [
   {
-    label: 'Overview',
-    section: 'Platform',
-    to: '/' as const,
+    label: 'Appearance',
+    section: 'Settings',
+    to: '/settings/appearance' as const,
   },
   {
-    label: 'Models',
-    section: 'AI',
-    to: '/ai/models' as const,
+    label: 'Account',
+    section: 'Settings',
+    to: '/settings/account' as const,
   },
   {
-    label: 'Manage Models',
-    section: 'AI',
-    to: '/ai/manage-models' as const,
-  },
-  {
-    label: 'Manage Providers',
-    section: 'AI',
-    to: '/ai/manage-providers' as const,
-  },
-  {
-    label: 'Analytics',
-    section: 'AI',
-    to: '/ai/analytics' as const,
-  },
-  {
-    label: 'Configuration',
-    section: 'AI',
-    to: '/ai/configuration' as const,
-  },
-  {
-    label: 'Observability',
-    section: 'Ship',
-    to: '/ship/observability' as const,
-  },
-  {
-    label: 'Workflows',
-    section: 'Ship',
-    to: '/ship/workflows' as const,
-  },
-  {
-    label: 'Static & Serverless',
-    section: 'Ship',
-    to: '/ship/static-and-serverless' as const,
-  },
-  {
-    label: 'Settings',
-    section: 'Platform',
+    label: 'Profile',
+    section: 'Settings',
     to: '/settings/profile' as const,
   },
   {
-    label: 'User',
-    section: 'Authorize',
-    to: '/authorize/user' as const,
+    label: 'Notifications',
+    section: 'Settings',
+    to: '/settings/notifications' as const,
   },
   {
-    label: 'Permission',
-    section: 'Authorize',
-    to: '/authorize/permission' as const,
-  },
-  {
-    label: 'Role',
-    section: 'Authorize',
-    to: '/authorize/role' as const,
+    label: 'Accessibility',
+    section: 'Settings',
+    to: '/settings/accessibility' as const,
   },
 ];
 
 const breadcrumbSegmentLabels: Record<string, string> = {
-  authorize: 'Authorize',
-  ai: 'AI',
-  configuration: 'Settings',
-  models: 'Models',
-  'manage-models': 'Manage Models',
-  permission: 'Permission',
-  'manage-providers': 'Manage Providers',
-  analytics: 'Analytics',
-  role: 'Role',
-  ship: 'Ship',
-  observability: 'Observability',
-  workflows: 'Workflows',
-  'static-and-serverless': 'Static & Serverless',
-  user: 'User',
+  settings: 'Settings',
+  appearance: 'Appearance',
+  account: 'Account',
+  profile: 'Profile',
+  notifications: 'Notifications',
+  accessibility: 'Accessibility',
 };
-
-function CollapsibleNavItem({
-  item,
-  icon: Icon,
-  isOpen,
-  onToggle,
-}: {
-  item: (typeof navigationItems)[number] & {
-    items: {
-      label: string;
-      to: string;
-      badgeIcon?: React.ComponentType<{ className?: string }>;
-    }[];
-  };
-  icon: React.ComponentType;
-  isOpen: boolean;
-  onToggle: () => void;
-}) {
-  const { state } = useSidebar();
-  const location = useLocation();
-  const isCollapsed = state === 'collapsed';
-
-  if (isCollapsed) {
-    return (
-      <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <SidebarMenuButton tooltip={item.label} type="button">
-              <Icon />
-              <span className="group-data-[collapsible=icon]:hidden">
-                {item.label}
-              </span>
-            </SidebarMenuButton>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent side="right" align="start" sideOffset={4}>
-            {item.items.map((subItem) => {
-              const BadgeIcon = subItem.badgeIcon;
-              const isSubActive = location.pathname === subItem.to;
-              return (
-                <DropdownMenuItem
-                  key={subItem.label}
-                  asChild
-                  className={
-                    isSubActive ? 'bg-accent text-accent-foreground' : undefined
-                  }
-                >
-                  <Link to={subItem.to}>
-                    {subItem.label}
-                    {BadgeIcon && (
-                      <BadgeIcon className="ml-auto size-3.5 shrink-0 text-red-500" />
-                    )}
-                  </Link>
-                </DropdownMenuItem>
-              );
-            })}
-          </DropdownMenuContent>
-        </DropdownMenu>
-      </SidebarMenuItem>
-    );
-  }
-
-  return (
-    <SidebarMenuItem>
-      <SidebarMenuButton
-        tooltip={item.label}
-        type="button"
-        onClick={onToggle}
-        aria-expanded={isOpen}
-      >
-        <Icon />
-        <span className="group-data-[collapsible=icon]:hidden">
-          {item.label}
-        </span>
-        <CaretRightIcon
-          className={
-            isOpen
-              ? 'ml-auto rotate-90 transition-transform duration-200 group-data-[collapsible=icon]:hidden'
-              : 'ml-auto transition-transform duration-200 group-data-[collapsible=icon]:hidden'
-          }
-        />
-      </SidebarMenuButton>
-      {isOpen ? (
-        <SidebarMenuSub>
-          {item.items.map((subItem) => {
-            const BadgeIcon = subItem.badgeIcon;
-            const isSubActive = location.pathname === subItem.to;
-            return (
-              <SidebarMenuSubItem key={subItem.label}>
-                <SidebarMenuSubButton asChild isActive={isSubActive}>
-                  <Link to={subItem.to}>
-                    <span>{subItem.label}</span>
-                    {BadgeIcon && (
-                      <BadgeIcon
-                        className={cn(
-                          'size-3.5 shrink-0',
-                          isSubActive
-                            ? '!text-red-500'
-                            : '!text-red-500/40 group-hover/menu-sub-item:!text-red-500',
-                        )}
-                      />
-                    )}
-                  </Link>
-                </SidebarMenuSubButton>
-              </SidebarMenuSubItem>
-            );
-          })}
-        </SidebarMenuSub>
-      ) : null}
-    </SidebarMenuItem>
-  );
-}
 
 function RouteComponent() {
   const location = useLocation();
   const navigate = useNavigate();
   const quickSearchInputRef = React.useRef<HTMLInputElement>(null);
-  const [selectedCorp, setSelectedCorp] = React.useState(corps[0]);
   const [isQuickSearchOpen, setIsQuickSearchOpen] = React.useState(false);
   const [isMacOs, setIsMacOs] = React.useState(false);
   const [quickSearchQuery, setQuickSearchQuery] = React.useState('');
   const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [openSubMenus, setOpenSubMenus] = React.useState<
-    Record<string, boolean>
-  >({
-    Authorize: location.pathname.startsWith('/authorize/'),
-    AI: location.pathname.startsWith('/ai/'),
-    Ship: location.pathname.startsWith('/ship/'),
-  });
-
-  React.useEffect(() => {
-    if (location.pathname.startsWith('/authorize/')) {
-      setOpenSubMenus((prev) => ({ ...prev, Authorize: true }));
-    }
-    if (location.pathname.startsWith('/ai/')) {
-      setOpenSubMenus((prev) => ({ ...prev, AI: true }));
-    }
-    if (location.pathname.startsWith('/ship/')) {
-      setOpenSubMenus((prev) => ({ ...prev, Ship: true }));
-    }
-  }, [location.pathname]);
 
   React.useEffect(() => {
     const platform = (
@@ -394,13 +146,6 @@ function RouteComponent() {
       window.removeEventListener('keydown', handleQuickSearchShortcut);
     };
   }, []);
-
-  const toggleSubMenu = (label: string) => {
-    setOpenSubMenus((prev) => ({
-      ...prev,
-      [label]: !prev[label],
-    }));
-  };
 
   const filteredQuickSearchItems = React.useMemo(() => {
     const normalizedQuery = quickSearchQuery.trim().toLowerCase();
@@ -463,16 +208,43 @@ function RouteComponent() {
     });
   }, [location.pathname]);
 
+  const getIconForLabel = (label: string) => {
+    switch (label) {
+      case 'Appearance':
+        return <PaintBrushIcon className="size-4" />;
+      case 'Account':
+        return <GearIcon className="size-4" />;
+      case 'Profile':
+        return <UserCircleIcon className="size-4" />;
+      case 'Notifications':
+        return <BellIcon className="size-4" />;
+      case 'Accessibility':
+        return <PersonIcon className="size-4" />;
+      default:
+        return null;
+    }
+  };
+
   return (
     <TooltipProvider>
       <SidebarProvider>
         <Sidebar collapsible="icon">
           <SidebarHeader>
-            <SidebarCorpChoosing
-              corps={corps}
-              selectedCorp={selectedCorp}
-              onCorpChange={setSelectedCorp}
-            />
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <SidebarMenuButton
+                  size="sm"
+                  tooltip="Back to dashboard"
+                  onClick={() => navigate({ to: '/' })}
+                  className="h-9 border border-input shadow-xs text-sidebar-foreground/70 hover:bg-sidebar-accent hover:text-sidebar-foreground transition-all px-2.5"
+                >
+                  <ArrowLeftIcon />
+                  <span className="group-data-[collapsible=icon]:hidden">
+                    Back
+                  </span>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            </SidebarMenu>
           </SidebarHeader>
           <SidebarContent>
             <SidebarGroup className="pb-1">
@@ -506,28 +278,11 @@ function RouteComponent() {
               </SidebarGroupContent>
             </SidebarGroup>
             <SidebarGroup>
-              <SidebarGroupLabel>Platform</SidebarGroupLabel>
+              <SidebarGroupLabel>Settings</SidebarGroupLabel>
               <SidebarGroupContent>
                 <SidebarMenu>
-                  {navigationItems.map((item) => {
+                  {settingsNavigationItems.map((item) => {
                     const Icon = item.icon;
-
-                    if (item.items) {
-                      return (
-                        <CollapsibleNavItem
-                          key={item.label}
-                          item={item}
-                          icon={Icon}
-                          isOpen={Boolean(openSubMenus[item.label])}
-                          onToggle={() => toggleSubMenu(item.label)}
-                        />
-                      );
-                    }
-
-                    if (!item.to) {
-                      return null;
-                    }
-
                     const isActive = location.pathname === item.to;
 
                     return (
@@ -551,14 +306,7 @@ function RouteComponent() {
               </SidebarGroupContent>
             </SidebarGroup>
           </SidebarContent>
-          <SidebarFooter>
-            <SidebarAccountManagement
-              user={{
-                name: 'shadcn',
-                email: 'm@example.com',
-              }}
-            />
-          </SidebarFooter>
+          <SidebarFooter />
           <SidebarRail />
         </Sidebar>
 
@@ -579,7 +327,7 @@ function RouteComponent() {
                 Quick search
               </DialogPrimitive.Title>
               <DialogPrimitive.Description className="sr-only">
-                Search and jump between platform pages.
+                Search and jump between settings pages.
               </DialogPrimitive.Description>
 
               <div className="flex items-center gap-3 border-b border-border px-4 py-3.5">
@@ -593,7 +341,7 @@ function RouteComponent() {
                     setSelectedIndex(0);
                   }}
                   onKeyDown={handleQuickSearchKeyDown}
-                  placeholder="Search products, pages, and features..."
+                  placeholder="Search settings..."
                   className="h-6 w-full border-0 bg-transparent text-[15px] outline-none placeholder:text-muted-foreground text-foreground"
                 />
                 <Kbd className="hidden h-6 select-none items-center justify-center rounded-md border border-border bg-muted px-2 font-mono text-[12px] text-muted-foreground shadow-none sm:flex">
@@ -604,7 +352,7 @@ function RouteComponent() {
               <div className="max-h-[60vh] overflow-y-auto p-2">
                 {filteredQuickSearchItems.length === 0 ? (
                   <div className="px-6 py-10 text-center text-sm text-muted-foreground">
-                    No results for "{quickSearchQuery}"
+                    No results for &quot;{quickSearchQuery}&quot;
                   </div>
                 ) : (
                   <div className="py-1">
@@ -634,14 +382,17 @@ function RouteComponent() {
                                 <DialogPrimitive.Close asChild>
                                   <Link
                                     to={item.to}
-                                    className={`group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors ${
+                                    className={cn(
+                                      'group flex w-full items-center justify-between rounded-lg px-3 py-2.5 outline-none transition-colors',
                                       isSelected
                                         ? 'bg-muted'
-                                        : 'hover:bg-muted focus:bg-muted'
-                                    }`}
+                                        : 'hover:bg-muted focus:bg-muted',
+                                    )}
                                   >
                                     <div className="flex items-center gap-3 w-full">
-                                      <CubeIcon className="size-5 shrink-0 text-muted-foreground" />
+                                      <div className="size-5 shrink-0 text-muted-foreground flex items-center justify-center">
+                                        {getIconForLabel(item.label)}
+                                      </div>
                                       <div className="flex w-full items-baseline gap-2 truncate">
                                         <span className="text-[14px] font-medium text-foreground">
                                           {item.label.toLowerCase()}:
@@ -650,16 +401,17 @@ function RouteComponent() {
                                           —
                                         </span>
                                         <span className="text-[14px] text-muted-foreground truncate">
-                                          Search {item.label} configurations
+                                          Search {item.label} settings
                                         </span>
                                       </div>
                                     </div>
                                     <ArrowRightIcon
-                                      className={`size-4 shrink-0 text-muted-foreground transition-opacity ${
+                                      className={cn(
+                                        'size-4 shrink-0 text-muted-foreground transition-opacity',
                                         isSelected
                                           ? 'opacity-100'
-                                          : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100'
-                                      }`}
+                                          : 'opacity-0 group-hover:opacity-100 group-focus:opacity-100',
+                                      )}
                                     />
                                   </Link>
                                 </DialogPrimitive.Close>
@@ -702,18 +454,12 @@ function RouteComponent() {
             <nav aria-label="Breadcrumb" className="flex items-center">
               <ol className="m-0! flex list-none items-center gap-1.5 p-0 text-sm">
                 <li className="flex items-center">
-                  {breadcrumbItems.length === 0 ? (
-                    <span className="font-medium text-foreground">
-                      Overview
-                    </span>
-                  ) : (
-                    <Link
-                      to="/"
-                      className="text-muted-foreground transition-colors hover:text-foreground"
-                    >
-                      Overview
-                    </Link>
-                  )}
+                  <Link
+                    to="/"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Overview
+                  </Link>
                 </li>
                 {breadcrumbItems.map((item, index) => {
                   const isLast = index === breadcrumbItems.length - 1;
